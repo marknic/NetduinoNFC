@@ -61,6 +61,13 @@ namespace Pn532Test
             Reset.Write(true);
         }
 
+        /// <summary>
+        /// Send a command to PN532 formatted in the right frame structure
+        /// </summary>
+        /// <param name="buffer">command to send</param>
+        /// <param name="bufferLength">length of command data in the command buffer array</param>
+        /// <param name="timeout">timeout ms</param>
+        /// <returns></returns>
         private static bool SendCommandCheckAck(byte[] buffer, byte bufferLength, int timeout)
         {
             //var timer = 0;
@@ -84,6 +91,10 @@ namespace Pn532Test
             return true;
         }
 
+        /// <summary>
+        /// Try to read the Status indicator that indicates tha
+        /// </summary>
+        /// <returns></returns>
         private static byte ReadI2CStatus()
         {
             var readBuffer = new byte[] {0x00};
@@ -106,6 +117,10 @@ namespace Pn532Test
             return readBuffer[0];
         }
 
+        /// <summary>
+        /// Write ACK or NACK
+        /// </summary>
+        /// <param name="doAck">true: Send ACK,  false: Send NACK</param>
         private static void WriteAckNack(bool doAck)
         {
             var frame = doAck ? new byte[] {0x00, 0x00, 0xff, 0x00, 0xff, 0x00} : new byte[] { 0x00, 0x00, 0xff, 0xff, 0x00, 0x00 };
